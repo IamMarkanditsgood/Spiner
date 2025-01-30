@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class TextManager
 {
-    public void SetText(object message, TMP_Text textRow, bool formatKNumber = false, string frontAddedMessage = "", string endAddedMessage = "", bool addToPrevious = false)
+    public void SetText(object message, TMP_Text textRow, bool formatKNumber = false, bool formatMNumber = false, string frontAddedMessage = "", string endAddedMessage = "", bool addToPrevious = false)
     {
-        string formattedText = GetFormattedText(message, formatKNumber);
+        string formattedText = GetFormattedText(message, formatKNumber, formatMNumber);
 
         if (addToPrevious)
         {
@@ -39,20 +39,27 @@ public class TextManager
         return $"{secsOnly}";
     }
 
-    private string GetFormattedText(object message, bool formatKNumber =false)
+    private string GetFormattedText(object message, bool formatKNumber =false , bool formatMNumber = false)
     {
-        if (formatKNumber && message is int number)
+        if ((formatKNumber || formatMNumber) && message is int number)
         {
-            return FormatKNumber(number);
+            return FormatNumber(number);
         }
 
         return message.ToString();
     }
 
-    private string FormatKNumber(int number)
+    private string FormatNumber(int number)
     {
-        return number >= 1000
-            ? (number / 1000f).ToString("0.#") + "K"
-            : number.ToString();
+        if (number >= 1_000_000) // якщо б≥льше м≥льйона, використовуЇмо M
+        {
+            return (number / 1_000_000f).ToString("0.#") + "M";
+        }
+        else if (number >= 1000) // якщо б≥льше тис€ч≥, використовуЇмо K
+        {
+            return (number / 1000f).ToString("0.#") + "K";
+        }
+
+        return number.ToString();
     }
 }

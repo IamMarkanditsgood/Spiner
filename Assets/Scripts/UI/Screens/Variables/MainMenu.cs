@@ -41,11 +41,13 @@ public class MainMenu : BasicScreen
 
     private void StartGame()
     {
-        SceneManager.LoadScene(nextScreenIndex);
+        SoundsManager.instance.PressButton();
+        SceneManager.LoadSceneAsync(nextScreenIndex);
     }
 
     private void Exit()
     {
+        SoundsManager.instance.PressButton();
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else

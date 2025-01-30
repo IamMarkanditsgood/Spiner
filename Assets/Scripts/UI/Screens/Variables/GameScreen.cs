@@ -42,11 +42,13 @@ public class GameScreen : BasicScreen
         _spinButton.interactable = true;
 
         int coins = ResourcesManager.Instance.GetResource(ResourceTypes.Coins);
-        _textManager.SetText(coins, _scoreText, true, "Score: ");
+        _textManager.SetText(coins, _scoreText, true, true, "Score: ");
     }
 
     private void StartSpin()
     {
+        SoundsManager.instance.PressButton();
+
         _spinButton.interactable = false;
         GameEvents.StartWheelSpin();
     }
@@ -57,6 +59,6 @@ public class GameScreen : BasicScreen
 
         int scoreText = ResourcesManager.Instance.GetResource(ResourceTypes.Coins);
 
-        _textManager.SetText(scoreText, _scoreText, true, "Score: ");
+        _textManager.SetText(scoreText, _scoreText, true, true, "Score: ");
     }
 }
